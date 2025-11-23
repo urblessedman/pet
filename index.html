@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
   <title>반려견 매칭 시스템 | 나에게 딱 맞는 강아지 찾기 테스트 (2025 최신)</title>
-  <meta name="description" content="나의 성격, 거주 환경, 활동량을 분석하여 가장 적합한 견종을 추천해주는 AI 반려견 매칭 테스트입니다. 털 빠짐 없는 강아지, 아파트에서 키우기 좋은 강아지 추천을 받아보세요.">
-  <meta name="keywords" content="강아지 MBTI, 반려견 테스트, 견종 추천, 아파트 강아지, 초보자 강아지 추천, 털 안빠지는 강아지, 펫 보험 비교">
+  <meta name="description" content="나의 성격, 거주 환경, 활동량을 분석하여 가장 적합한 견종을 추천해주는 AI 반려견 매칭 테스트입니다. 16종의 데이터베이스로 정밀 분석합니다.">
+  <meta name="keywords" content="강아지 MBTI, 반려견 테스트, 견종 추천, 아파트 강아지, 초보자 강아지 추천, 포메라니안, 비숑, 리트리버, 펫 보험">
   <link rel="canonical" href="https://pet.smartkrinsurance.com/">
   
   <meta property="og:type" content="website">
-  <meta property="og:title" content="나의 운명적 반려견 찾기 테스트">
-  <meta property="og:description" content="내 성격과 현실 조건(집, 비용)을 분석해 딱 맞는 강아지를 찾아드립니다.">
+  <meta property="og:title" content="나의 운명적 반려견 찾기 테스트 (V12 Premium)">
+  <meta property="og:description" content="12가지 정밀 질문으로 분석하는 내 영혼의 단짝 댕댕이는? 지금 바로 확인하세요!">
   <meta property="og:image" content="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800">
   <meta property="og:url" content="https://pet.smartkrinsurance.com/">
 
@@ -20,6 +20,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -45,6 +47,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
+    /* ★★★ Layout Stability (No Flex on Body) ★★★ */
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--bg-color);
@@ -52,14 +55,13 @@
       margin: 0; padding: 0;
       width: 100%;
       min-height: 100vh;
-      /* 하단 광고 공간 확보 */
       padding-bottom: 60px; 
     }
 
     #app-container {
       width: 100%;
       max-width: 500px;
-      margin: 0 auto; /* 물리적 중앙 정렬 */
+      margin: 0 auto; /* Physical Centering */
       background: var(--white);
       min-height: 100vh;
       box-shadow: var(--shadow);
@@ -76,7 +78,6 @@
     }
     header i { color: var(--primary-color); margin-right: 5px; }
 
-    /* ★★★ 핵심 수정: main 높이를 100vh로 강제하여 푸터를 화면 밖으로 밀어냄 ★★★ */
     main { 
       flex: 1; 
       padding: 20px; 
@@ -84,7 +85,7 @@
       flex-direction: column; 
       align-items: center; 
       text-align: center;
-      min-height: 100vh; /* 이 설정이 푸터를 스크롤 아래로 보냅니다 */
+      min-height: 100vh;
     }
 
     .screen { display: none; width: 100%; animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -117,8 +118,8 @@
     .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.4s ease; border-radius: 10px; }
     .step-text { text-align: right; font-size: 0.8rem; color: #aaa; margin-top: 5px; font-weight: bold; }
     .question-category { color: var(--secondary-color); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-    .question-box h2 { font-family: 'Jua', sans-serif; font-size: 1.6rem; margin-bottom: 30px; line-height: 1.4; color: #2D3436; word-break: keep-all; }
-    .option-btn { width: 100%; padding: 22px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; transition: all 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between; }
+    .question-box h2 { font-family: 'Jua', sans-serif; font-size: 1.5rem; margin-bottom: 30px; line-height: 1.4; color: #2D3436; word-break: keep-all; }
+    .option-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; transition: all 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between; }
     .option-btn:hover { border-color: var(--primary-color); background-color: #F8F7FF; color: var(--primary-color); transform: translateY(-2px); }
     .option-btn i { font-size: 1.2rem; opacity: 0.5; }
     .option-btn:hover i { opacity: 1; color: var(--primary-color); }
@@ -128,7 +129,7 @@
     .score-badge i { color: #FF7675; margin-right: 5px; }
     .result-name { font-family: 'Jua', sans-serif; font-size: 2.4rem; color: var(--primary-color); margin-bottom: 15px; }
     .result-img-wrapper { position: relative; width: 220px; height: 220px; margin: 0 auto 25px; }
-    .result-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 8px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+    .result-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 8px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); background-color: #fff; }
     .match-label { position: absolute; bottom: 10px; right: 0; background: var(--secondary-color); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
     
     /* Radar Chart */
@@ -136,7 +137,7 @@
     .radar-row { display: flex; align-items: center; margin-bottom: 10px; }
     .radar-label { width: 70px; text-align: left; font-size: 0.85rem; font-weight: bold; color: #555; }
     .radar-bar-bg { flex: 1; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; }
-    .radar-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 0s ease; }
+    .radar-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1s ease; }
     .bar-1 { background: var(--primary-color); } .bar-2 { background: var(--secondary-color); } .bar-3 { background: var(--accent-color); }
 
     .desc-box { text-align: left; line-height: 1.7; font-size: 0.95rem; color: #444; margin: 0 20px 30px; padding: 20px; background: #fff; border: 2px solid #f1f2f6; border-radius: 15px; }
@@ -153,26 +154,24 @@
     .btn-share { background: #FEE500; color: #3c1e1e; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
     .btn-retry { background: white; border: 2px solid #eee; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; color: #666; cursor: pointer; margin-top: 10px;}
 
-    /* Ads */
     .ad-area { width: 100%; min-height: 100px; background: #f8f9fa; margin-top: 20px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ccc; font-size: 0.8rem; position: relative; }
     .ad-label { font-size: 0.6rem; color: #ddd; margin-bottom: 5px; align-self: flex-start; margin-left: 10px; }
     .ad-loading { width: 300px; height: 250px; background: #f1f2f6; border-radius: 15px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: #bdc3c7; font-weight: bold; border: 2px dashed #dcdde1; }
 
-    /* Loading */
+    /* Loading Animation */
     .loading-container { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .dna-spinner { font-size: 3rem; color: var(--primary-color); animation: spin 2s infinite linear; margin-bottom: 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .loading-text { font-family: 'Jua'; font-size: 1.5rem; margin-bottom: 10px; }
     .loading-sub { color: #888; font-size: 0.9rem; }
 
-    /* SEO Content */
+    /* Footer & SEO */
     .seo-content { background: #F1F2F6; padding: 30px 20px; margin-top: 40px; text-align: left; border-radius: 20px 20px 0 0; }
     .seo-content h3 { font-size: 1.1rem; margin-bottom: 10px; color: #2D3436; }
     .seo-content p { font-size: 0.85rem; color: #636E72; line-height: 1.6; margin-bottom: 15px; }
     .seo-tags { display: flex; flex-wrap: wrap; gap: 5px; }
     .seo-tag { background: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; color: #999; }
 
-    /* Footer - Initially below fold due to main min-height */
     footer { background: #2D3436; color: #b2bec3; padding: 30px 20px; text-align: center; font-size: 0.8rem; line-height: 1.8; }
     footer a { color: #dfe6e9; text-decoration: none; }
     footer .legal-links { margin-bottom: 15px; }
@@ -219,10 +218,11 @@
             반려견 입양을 고민 중이신가요? 단순히 귀여운 외모만 보고 선택하면 파양이나 유기 등 안타까운 상황이 발생할 수 있습니다. 
             본 테스트는 견주의 성향(MBTI), 거주 환경(아파트/주택), 경제적 여건, 활동량을 종합적으로 분석하여 실패 없는 입양을 돕습니다.
           </p>
-          <h3>📊 주요 분석 견종</h3>
+          <h3>📊 주요 분석 견종 (16종)</h3>
           <div class="seo-tags">
-            <span class="seo-tag">#말티즈</span> <span class="seo-tag">#푸들</span> <span class="seo-tag">#비숑</span>
-            <span class="seo-tag">#시바견</span> <span class="seo-tag">#리트리버</span> <span class="seo-tag">#포메라니안</span>
+            <span class="seo-tag">#말티즈</span> <span class="seo-tag">#푸들</span> <span class="seo-tag">#포메라니안</span>
+            <span class="seo-tag">#비숑</span> <span class="seo-tag">#시바견</span> <span class="seo-tag">#리트리버</span>
+            <span class="seo-tag">#사모예드</span> <span class="seo-tag">#닥스훈트</span> <span class="seo-tag">#웰시코기</span>
           </div>
         </div>
       </div>
@@ -230,7 +230,7 @@
       <div id="screen-question" class="screen">
         <div class="progress-wrapper">
           <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-          <div class="step-text">Step <span id="q-idx">1</span> / 7</div>
+          <div class="step-text">Step <span id="q-idx">1</span> / 12</div>
         </div>
         <div class="question-category" id="q-cat">CATEGORY</div>
         <div class="question-box">
@@ -247,9 +247,8 @@
       <div id="screen-loading" class="screen">
         <div class="loading-container">
           <i class="fas fa-dna dna-spinner"></i>
-          <h2 class="loading-text">데이터 분석 중...</h2>
+          <h2 class="loading-text" id="load-msg">데이터 분석 중...</h2>
           <p class="loading-sub">성격 유형과 환경 적합도를 계산합니다.</p>
-          
           <div id="ad-container-loading" class="ad-loading">PREMIUM AD</div>
         </div>
       </div>
@@ -326,45 +325,54 @@
 
   <script>
     //<![CDATA[
-    // 1. 데이터베이스
+    // 1. 데이터베이스 (16종으로 확장 - 이미지는 임시 URL, 나중에 본인 것으로 교체 필수)
     const dogs = [
-      { name: "핵인싸 골든 리트리버", img: "https://i.imgur.com/gK8eP3R.png", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", health: "고관절 이형성증 및 피부질환 주의" },
-      { name: "똑쟁이 토이 푸들", img: "https://i.imgur.com/rN5hP1A.png", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 있을 거예요.", health: "슬개골 탈구 및 외이염 주의" },
-      { name: "시크한 시바견", img: "https://i.imgur.com/1G2jK0L.png", traits: [2, 5, 6], tag: "#밀당고수", desc: "자기만의 시간이 필요한 당신. 독립적인 성향의 시바견과는 서로의 영역을 존중하며 쿨한 동거가 가능합니다. 단, 털은 많이 빠져요!", health: "아토피 피부염 및 알레르기 주의" },
-      { name: "깨발랄 비글", img: "https://i.imgur.com/7b7fQ8g.png", traits: [9, 6, 10], tag: "#에너지왕", desc: "지루한 건 딱 질색인 당신! 비글의 넘치는 에너지를 감당할 수 있는 유일한 분이시군요. 매일매일이 시트콤이 될 거예요.", health: "비만 및 귀 염증(외이염) 주의" },
+      { name: "핵인싸 골든 리트리버", img: "https://i.imgur.com/gK8eP3R.png", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 털 빠짐과 활동량이 많아 넓은 공간이 필요합니다.", health: "고관절 이형성증 및 피부질환 주의" },
+      { name: "똑쟁이 토이 푸들", img: "https://i.imgur.com/rN5hP1A.png", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 최고!", health: "슬개골 탈구 및 외이염 주의" },
+      { name: "시크한 시바견", img: "https://i.imgur.com/1G2jK0L.png", traits: [2, 5, 6], tag: "#밀당고수", desc: "독립적인 당신과 잘 맞아요. 서로의 영역을 존중하며 쿨한 동거가 가능합니다. 단, 엄청난 털 빠짐은 각오하세요!", health: "아토피 피부염 및 알레르기 주의" },
+      { name: "깨발랄 비글", img: "https://i.imgur.com/7b7fQ8g.png", traits: [9, 6, 10], tag: "#에너지왕", desc: "지루한 건 딱 질색인 당신! 비글의 넘치는 에너지를 감당할 수 있는 유일한 분이시군요. 매일이 시트콤입니다.", health: "비만 및 귀 염증(외이염) 주의" },
       { name: "솜사탕 비숑", img: "https://i.imgur.com/2K1zT8P.png", traits: [9, 4, 7], tag: "#힐링견", desc: "다정다감한 성격의 당신. 비숑의 폭풍 애교에 매일 녹아내릴 거예요. 털 관리에 정성을 쏟을 준비만 하시면 됩니다!", health: "백내장 및 슬개골 탈구 주의" },
-      { name: "작은 거인 치와와", img: "https://i.imgur.com/X4y2hW5.png", traits: [6, 1, 3], tag: "#내사랑", desc: "내 사람 챙기기를 좋아하는 당신. 치와와는 질투가 많아 당신만을 바라볼 거예요. 좁은 실내에서도 키우기 부담 없습니다.", health: "치아 관리 및 두개골 질환 주의" },
-      { name: "엉뚱매력 웰시코기", img: "https://i.imgur.com/j1xG7tP.png", traits: [8, 6, 9], tag: "#식탐왕", desc: "먹는 것과 노는 것을 좋아하는 당신! 코기와 함께 맛집 투어도 하고 산책도 하며 즐거운 일상을 보낼 수 있어요. 털은 좀 빠집니다!", health: "허리 디스크(IVDD) 및 비만 주의" },
+      { name: "작은 거인 치와와", img: "https://i.imgur.com/X4y2hW5.png", traits: [6, 1, 3], tag: "#내사랑", desc: "내 사람 챙기기를 좋아하는 당신. 치와와는 질투가 많아 당신만을 바라볼 거예요. 좁은 실내에서도 키우기 좋습니다.", health: "치아 관리 및 두개골 질환 주의" },
+      { name: "엉뚱매력 웰시코기", img: "https://i.imgur.com/j1xG7tP.png", traits: [8, 6, 9], tag: "#식탐왕", desc: "먹는 것과 노는 것을 좋아하는 당신! 코기와 함께 맛집 투어도 하고 산책도 하며 즐거운 일상을 보낼 수 있어요.", health: "허리 디스크(IVDD) 및 비만 주의" },
       { name: "우아한 몰티즈", img: "https://i.imgur.com/b9J3E6t.png", traits: [8, 2, 4], tag: "#국민반려견", desc: "집에서 쉬는 걸 좋아하는 당신. 작고 하얀 몰티즈는 최고의 룸메이트입니다. 참지 않는 성격이니 오냐오냐는 금물!", health: "유루증(눈물자국) 및 심장질환 주의" },
       { name: "카리스마 허스키", img: "https://i.imgur.com/M6L7cRk.png", traits: [5, 9, 10], tag: "#엉뚱함", desc: "자유로운 영혼의 소유자! 허스키의 엉뚱함과 대화하는 듯한 하울링이 당신의 삶을 지루하지 않게 해줄 거예요.", health: "안구 질환 및 고관절 주의" },
       { name: "천재견 보더콜리", img: "https://i.imgur.com/l4Z2e1G.png", traits: [7, 8, 10], tag: "#워커홀릭", desc: "성취욕이 강하고 활동적인 당신. 보더콜리와 함께 프리스비나 어질리티를 도전해보세요. 최고의 파트너가 될 겁니다.", health: "관절 관리 및 결막염 주의" },
       { name: "느긋한 시츄", img: "https://i.imgur.com/o5X1z7U.png", traits: [5, 2, 2], tag: "#평화주의자", desc: "여유롭고 느긋한 성격의 당신. 짖지 않고 얌전한 시츄와 함께 조용하고 평화로운 힐링 라이프를 즐겨보세요.", health: "안구 건조증 및 호흡기 질환 주의" },
-      { name: "개성파 프렌치불독", img: "https://i.imgur.com/sY9X2bY.png", traits: [6, 4, 4], tag: "#볼매", desc: "유니크한 매력을 알아보는 당신. 무뚝뚝해 보이지만 알고 보면 정이 많은 불독과 깊은 우정을 쌓을 수 있어요.", health: "단두종 호흡기 증후군 및 피부병 주의" }
+      { name: "개성파 프렌치불독", img: "https://i.imgur.com/sY9X2bY.png", traits: [6, 4, 4], tag: "#볼매", desc: "유니크한 매력을 알아보는 당신. 무뚝뚝해 보이지만 알고 보면 정이 많은 불독과 깊은 우정을 쌓을 수 있어요.", health: "단두종 호흡기 증후군 및 피부병 주의" },
+      // ★ 추가된 4종 (New Breeds)
+      { name: "앙큼상큼 포메라니안", img: "https://i.imgur.com/X4y2hW5.png", traits: [7, 2, 4], tag: "#인형미모", desc: "작지만 용감하고 자기애가 강한 포메! 화려한 털 관리와 앙칼진 성격을 받아줄 수 있는 당신에게 추천합니다.", health: "슬개골 탈구 및 골절 주의" },
+      { name: "용감한 닥스훈트", img: "https://i.imgur.com/7b7fQ8g.png", traits: [8, 3, 6], tag: "#숏다리", desc: "호기심 많고 고집 센 사냥개 본능! 닥스훈트의 고집을 귀엽게 봐줄 수 있는 인내심 많은 당신과 잘 맞습니다.", health: "허리 디스크 및 비만 주의" },
+      { name: "요정 요크셔 테리어", img: "https://i.imgur.com/rN5hP1A.png", traits: [8, 2, 3], tag: "#움직이는보석", desc: "화려한 털과 도도한 성격의 요키. 주인에게는 애교쟁이지만 낯선 이에게는 까칠한 매력이 있죠. 털 관리는 필수!", health: "기관지 협착 및 치아 질환 주의" },
+      { name: "미소천사 사모예드", img: "https://i.imgur.com/gK8eP3R.png", traits: [9, 9, 9], tag: "#솜사탕", desc: "항상 웃고 있는 얼굴의 사모예드! 엄청난 털 빠짐과 활동량을 감당할 수 있다면, 세상에서 가장 행복한 반려견이 됩니다.", health: "고관절 및 당뇨병 주의" }
     ];
 
+    // 2. 질문지 (12문항으로 확장 - 체류 시간 증대)
     const questions = [
-      { cat: "🏠 Reality", q: "현재 거주하고 계신 환경은?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
-      { cat: "❤️ Personality", q: "주말 아침, 이상적인 휴식은?", a: "침대와 한 몸이 되어 넷플릭스", b: "일단 밖으로 나가서 에너지 발산!", impact: [0, 0, 3] },
-      { cat: "🧹 Reality", q: "검은 옷에 하얀 털이 묻는다면?", a: "절대 싫어! 돌돌이 필수.", b: "강아지 털은 패션이지! 괜찮다.", impact: [0, -1, 0] },
-      { cat: "❤️ Personality", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
-      { cat: "⏰ Reality", q: "하루 산책, 얼마나 가능하신가요?", a: "30분 내외 (바쁨)", b: "1시간 이상 (여유로움)", impact: [0, 0, 2] },
-      { cat: "❤️ Personality", q: "낯선 사람이 말을 걸어온다면?", a: "부담스럽다.. 자리를 피한다.", b: "오! 반가워요! 금방 친해진다.", impact: [2, 0, 0] },
-      { cat: "💰 Reality", q: "대형견은 병원비/식비가 3배입니다.", a: "현실적으로 부담된다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] }
+      { cat: "🏠 거주 환경", q: "현재 거주하고 계신 주거 형태는?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
+      { cat: "❤️ 성격 매칭", q: "주말 아침, 이상적인 휴식 방법은?", a: "이불 밖은 위험해.. 집콕 힐링", b: "날씨 좋은데 무조건 나가야지!", impact: [0, 0, 3] },
+      { cat: "🧹 털 관리", q: "검은 옷에 하얀 강아지 털이 묻는다면?", a: "으악 절대 싫어! 돌돌이 필수.", b: "강아지 키우면 당연한 거지. 괜찮다.", impact: [0, -1, 0] },
+      { cat: "🤝 관계성", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
+      { cat: "⏰ 산책 시간", q: "하루에 강아지 산책, 얼마나 가능하세요?", a: "바빠서 30분 내외가 한계..", b: "1시간 이상 매일 가능!", impact: [0, 0, 2] },
+      { cat: "🗣️ 사회성", q: "산책 중 낯선 사람이 말을 건다면?", a: "어색하게 웃고 자리를 피한다.", b: "오! 안녕하세요! 금방 수다를 떤다.", impact: [2, 0, 0] },
+      { cat: "💰 경제력", q: "대형견은 병원비/식비가 소형견의 3배입니다.", a: "현실적으로 부담스럽다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] },
+      // ★ 추가된 질문들 (심화)
+      { cat: "🛁 관리 난이도", q: "매일 빗질하고 눈물자국 닦아주는 것, 자신 있나요?", a: "솔직히 좀 귀찮을 것 같다.", b: "내 강아지 예뻐지는 건데 당연하지!", impact: [0, -1, 0] },
+      { cat: "🎓 훈련", q: "강아지가 말을 안 듣고 고집을 부린다면?", a: "어휴.. 좀 답답할 것 같다.", b: "단호하게 훈육하거나 전문가를 부른다.", impact: [0, 0, 1] },
+      { cat: "🔊 짖음 소음", q: "이웃집 소음 민원이 걱정되시나요?", a: "네, 방음이 잘 안돼서 조용해야 해요.", b: "주택이라 좀 짖어도 괜찮아요.", impact: [0, -1, 0] },
+      { cat: "🦠 위생", q: "강아지가 내 침대에 올라와서 자는 건?", a: "절대 안됨. 잠자리는 분리!", b: "너무 좋아! 껴안고 잘래.", impact: [-1, 0, 0] },
+      { cat: "✈️ 분리불안", q: "집을 비우는 시간이 하루에 얼마나 되나요?", a: "8시간 이상 (직장인)", b: "거의 집에 있거나 재택근무", impact: [0, 0, -1] }
     ];
 
     let qIdx = 0;
     let userScore = [5, 5, 3]; 
     let currentDog = null;
 
-    // ★★★ 스크롤 최상단 이동 함수 ★★★
-    function scrollToTop() {
-      window.scrollTo(0, 0);
-    }
+    function scrollToTop() { window.scrollTo(0, 0); }
 
     function startTest() {
       document.querySelector('#screen-start').classList.remove('active');
       document.querySelector('#screen-question').classList.add('active');
-      scrollToTop(); // 화면 전환 시 최상단으로
+      scrollToTop();
       loadQuestion();
     }
 
@@ -375,9 +383,7 @@
       document.getElementById('q-text').innerText = q.q;
       document.getElementById('ans-a').innerText = q.a;
       document.getElementById('ans-b').innerText = q.b;
-      
-      const percent = ((qIdx) / questions.length) * 100;
-      document.getElementById('progress').style.width = percent + "%";
+      document.getElementById('progress').style.width = ((qIdx) / questions.length * 100) + "%";
     }
 
     function nextQuestion(choice) {
@@ -388,7 +394,7 @@
         userScore[0] += impact[0]; userScore[1] -= impact[1]; userScore[2] += impact[2];
       }
       qIdx++;
-      scrollToTop(); // 다음 질문으로 넘어갈 때도 최상단
+      scrollToTop();
       if (qIdx < questions.length) loadQuestion();
       else showLoading();
     }
@@ -397,7 +403,18 @@
       document.querySelector('#screen-question').classList.remove('active');
       document.querySelector('#screen-loading').classList.add('active');
       scrollToTop();
-      setTimeout(calculateResult, 2500);
+      
+      // Dynamic Loading Text
+      const msgs = ["🏠 거주 환경 분석 중...", "🧬 성향 데이터 대조 중...", "🏥 유전적 건강 체크 중...", "✨ 최종 매칭 완료!"];
+      let i = 0;
+      const textInterval = setInterval(() => {
+        if(i < msgs.length) document.getElementById('load-msg').innerText = msgs[i++];
+      }, 800);
+
+      setTimeout(() => {
+        clearInterval(textInterval);
+        calculateResult();
+      }, 3200);
     }
 
     function calculateResult() {
@@ -412,21 +429,17 @@
       });
       currentDog = bestDog;
 
-      let matchScore = Math.floor((1 - (minDiff / 20)) * 100);
-      if (matchScore > 98) matchScore = 98;
-      if (matchScore < 70) matchScore = 70;
+      let matchScore = Math.floor((1 - (minDiff / 25)) * 100);
+      if (matchScore > 98) matchScore = 98; if (matchScore < 70) matchScore = 70;
 
-      // 결과 렌더링
       document.getElementById('res-name').innerText = bestDog.name;
       document.getElementById('res-img').src = bestDog.img; 
       document.getElementById('res-desc').innerText = bestDog.desc;
       document.getElementById('res-tag').innerText = bestDog.tag;
       document.getElementById('match-percent').innerText = matchScore; 
-      
       document.getElementById('res-health').innerText = bestDog.health;
       document.getElementById('ins-btn-text').innerText = bestDog.name.split(' ').pop() + " 보험료 10초 확인 >";
 
-      // 차트 애니메이션
       window.requestAnimationFrame(() => {
         document.getElementById('score-chem').style.width = (bestDog.traits[0] * 10) + "%";
         document.getElementById('score-env').style.width = (bestDog.traits[1] * 10) + "%";
@@ -435,42 +448,36 @@
 
       document.querySelector('#screen-loading').classList.remove('active');
       document.querySelector('#screen-result').classList.add('active');
-      scrollToTop(); // 결과 화면 나오면 최상단으로
+      scrollToTop();
+      
+      // Trigger Confetti
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
 
     function shareFinalResult() {
-        if (!currentDog) {
-            alert("테스트 결과를 먼저 확인해주세요!");
-            return;
-        }
+        if (!currentDog) return;
         const shareData = {
             title: `나의 운명적 반려견은 [${currentDog.name}]!`,
-            text: `내 성격과 현실 조건에 딱 맞는 ${currentDog.name}의 분석 결과는? 지금 확인해보세요!`,
+            text: `나에게 딱 맞는 강아지는 누구일까요? 지금 테스트해보세요!`,
             url: window.location.href,
         };
         if (navigator.share) {
             navigator.share(shareData).catch(console.error);
         } else {
             navigator.clipboard.writeText(shareData.title + '\n' + shareData.url).then(() => {
-                alert("🔗 결과 링크와 문구가 복사되었습니다! 친구에게 붙여넣어 공유하세요.");
-            }).catch(() => {
-                alert("공유 기능이 지원되지 않습니다. 주소를 직접 복사해주세요.");
+                alert("🔗 링크가 복사되었습니다!");
             });
         }
     }
 
-    // Modal Functions
     function openModal(type) {
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
       const overlay = document.getElementById('modal-overlay');
-      
       if (type === 'terms') {
-        title.innerText = "이용약관 (Terms of Use)";
-        body.innerText = "1. 본 서비스는 재미를 위한 심리 테스트이며 전문적인 의학/행동학적 진단을 대신할 수 없습니다.\n2. 결과에 따른 입양 결정의 책임은 사용자에게 있습니다.\n3. 수집된 비식별 데이터는 서비스 개선에 활용될 수 있습니다.";
+        title.innerText = "이용약관"; body.innerText = "본 서비스는 재미를 위한 심리 테스트입니다. 입양 결정은 신중하게 하세요.";
       } else {
-        title.innerText = "개인정보처리방침 (Privacy)";
-        body.innerText = "1. 본 사이트는 사용자의 개인정보(이름, 전화번호 등)를 서버에 저장하지 않습니다.\n2. 쿠키 및 이용 데이터는 구글 애널리틱스/애드센스를 통해 익명으로 수집됩니다.";
+        title.innerText = "개인정보처리방침"; body.innerText = "개인정보를 저장하지 않습니다. 쿠키는 광고 및 분석용으로만 사용됩니다.";
       }
       overlay.style.display = 'flex';
     }
