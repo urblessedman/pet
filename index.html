@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>반려견 매칭 시스템 (성격+환경 종합분석)</title>
+  
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1076/1076928.png" />
+  
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -12,92 +14,172 @@
   <script src="ads.js" defer></script>
 
   <style>
-    /* 기존 CSS 스타일 그대로 유지 (생략 없이 그대로 사용하세요) */
-    :root { --bg-color: #F8F9FA; --primary-color: #6C5CE7; --secondary-color: #00CEC9; --accent-color: #FF7675; --text-color: #2D3436; --white: #ffffff; --shadow: 0 10px 30px rgba(108, 92, 231, 0.15); --radius: 20px; }
+    /* CSS Reset & Variables */
+    :root {
+      --bg-color: #F8F9FA;
+      --primary-color: #6C5CE7;
+      --secondary-color: #00CEC9;
+      --accent-color: #FF7675;
+      --text-color: #2D3436;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
+      --radius: 20px;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    /* ★★★ V9.5 关键修改：移除 body 上的 flex 居中，防止抖动 ★★★ */
     body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  /* ★ 修改点：确保 body 自身没有默认边距，且强制水平居中 */
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  width: 100%;
-}
- #app-container {
-  width: 100%;
-  max-width: 500px;
-  background: var(--white);
-  min-height: 100vh;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  /* ★ 修改点：使用更强制的居中策略 */
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-    header { padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(5px); }
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      /* display: flex;  <-- 这行删除了 */
+      /* justify-content: center; <-- 这行删除了 */
+      overflow-y: scroll; /* 防止滚动条出现导致页面跳动 */
+    }
+
+    /* ★★★ V9.5 关键修改：使用 margin: 0 auto 强制物理居中 ★★★ */
+    #app-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto; /* 这是最稳的居中方式 */
+      background: var(--white);
+      min-height: 100vh;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Header */
+    header { 
+      padding: 18px;
+      text-align: center;
+      font-family: 'Jua', sans-serif;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      border-bottom: 1px solid #eee;
+      background: rgba(255,255,255,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
     header i { color: var(--primary-color); margin-right: 5px; }
+
     main { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+    /* Animation */
     .screen { display: none; width: 100%; animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
     .screen.active { display: flex; flex-direction: column; align-items: center; }
-    .hero-img { content: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=600'); width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius); margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Screen 1: Start */
+    .hero-img { 
+      content: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=600');
+      width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius); 
+      margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    }
+    
     h1 { font-family: 'Jua', sans-serif; font-size: 2.1rem; margin-bottom: 10px; line-height: 1.3; color: #111; }
     h1 span { color: var(--primary-color); position: relative; z-index: 1; }
     h1 span::after { content:''; position: absolute; bottom: 2px; left: 0; width: 100%; height: 10px; background: #dfe6e9; z-index: -1; opacity: 0.5; }
+    
     .subtitle { color: #636E72; font-size: 1rem; margin-bottom: 30px; line-height: 1.6; }
+    
     .tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
     .tag-bubble { background: #f1f2f6; padding: 6px 12px; border-radius: 15px; font-size: 0.85rem; color: #555; font-weight: bold; }
     .tag-bubble.highlight { background: #EBE5FC; color: var(--primary-color); }
-    .btn-primary { background: linear-gradient(135deg, var(--primary-color), #a29bfe); color: white; border: none; padding: 18px 0; width: 100%; font-size: 1.2rem; border-radius: var(--radius); font-weight: 700; font-family: 'Jua'; cursor: pointer; box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3); transition: transform 0.1s; position: relative; overflow: hidden; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), #a29bfe);
+      color: white; border: none; padding: 18px 0; width: 100%;
+      font-size: 1.2rem; border-radius: var(--radius); font-weight: 700; font-family: 'Jua';
+      cursor: pointer; box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+      transition: transform 0.1s; position: relative; overflow: hidden;
+    }
     .btn-primary:active { transform: scale(0.98); }
+
+    /* Screen 2: Question */
     .progress-wrapper { width: 100%; margin-bottom: 30px; }
     .progress-bar { width: 100%; height: 8px; background: #E5E7EB; border-radius: 10px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.4s ease; border-radius: 10px; }
     .step-text { text-align: right; font-size: 0.8rem; color: #aaa; margin-top: 5px; font-weight: bold; }
+
     .question-category { color: var(--secondary-color); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
     .question-box h2 { font-family: 'Jua', sans-serif; font-size: 1.6rem; margin-bottom: 30px; line-height: 1.4; color: #2D3436; word-break: keep-all; }
-    .option-btn { width: 100%; padding: 22px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; transition: all 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between; }
+    
+    .option-btn {
+      width: 100%; padding: 22px; margin-bottom: 15px;
+      border: 2px solid #F0F2F5; border-radius: 18px;
+      background: white; font-size: 1rem; font-weight: 500; color: #444;
+      cursor: pointer; transition: all 0.2s; text-align: left; display: flex; align-items: center; justify-content: space-between;
+    }
     .option-btn:hover { border-color: var(--primary-color); background-color: #F8F7FF; color: var(--primary-color); transform: translateY(-2px); }
     .option-btn i { font-size: 1.2rem; opacity: 0.5; }
     .option-btn:hover i { opacity: 1; color: var(--primary-color); }
+
+    /* Screen 3: Loading */
     .loading-container { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .dna-spinner { font-size: 3rem; color: var(--primary-color); animation: spin 2s infinite linear; margin-bottom: 20px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .loading-text { font-family: 'Jua'; font-size: 1.5rem; margin-bottom: 10px; }
     .loading-sub { color: #888; font-size: 0.9rem; }
-    .score-badge { background: #2D3436; color: white; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .ad-loading { width: 300px; height: 250px; background: #f1f2f6; border-radius: 15px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: #bdc3c7; font-weight: bold; border: 2px dashed #dcdde1; }
+
+    /* Screen 4: Result */
+    .result-card { width: 100%; background: #fff; border-radius: 0; padding-bottom: 40px; }
+    
+    .score-badge { 
+      background: #2D3436; color: white; padding: 6px 15px; border-radius: 20px; 
+      font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; margin-bottom: 15px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
     .score-badge i { color: #FF7675; margin-right: 5px; }
+
     .result-name { font-family: 'Jua', sans-serif; font-size: 2.4rem; color: var(--primary-color); margin-bottom: 15px; }
+    
     .result-img-wrapper { position: relative; width: 220px; height: 220px; margin: 0 auto 25px; }
-    .result-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 8px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+    .result-img { 
+      width: 100%; height: 100%; 
+      border-radius: 50%; 
+      object-fit: cover; 
+      border: 8px solid white; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
+      background-color: #fff;
+    }
     .match-label { position: absolute; bottom: 10px; right: 0; background: var(--secondary-color); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
+
+    /* Radar Chart */
     .radar-box { background: #F8F9FA; border-radius: 15px; padding: 20px; margin: 0 20px 25px; }
     .radar-row { display: flex; align-items: center; margin-bottom: 10px; }
     .radar-label { width: 70px; text-align: left; font-size: 0.85rem; font-weight: bold; color: #555; }
     .radar-bar-bg { flex: 1; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; }
-    .radar-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 0s ease; } 
+    .radar-bar-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1s ease; }
+    
     .bar-1 { background: var(--primary-color); }
     .bar-2 { background: var(--secondary-color); }
     .bar-3 { background: var(--accent-color); }
+
     .desc-box { text-align: left; line-height: 1.7; font-size: 0.95rem; color: #444; margin: 0 20px 30px; padding: 20px; background: #fff; border: 2px solid #f1f2f6; border-radius: 15px; }
     .desc-title { font-weight: bold; color: var(--primary-color); margin-bottom: 5px; display: block; }
+
+    /* Insurance Box */
     .insurance-alert { background: #FFF5F5; border: 1px solid #FEB2B2; border-radius: var(--radius); padding: 20px; margin: 0 20px 25px; text-align: left; position: relative; overflow: hidden; }
     .insurance-alert::before { content:''; position: absolute; top:0; left:0; width: 5px; height: 100%; background: #FC8181; }
     .alert-header { display: flex; align-items: center; margin-bottom: 10px; color: #C53030; font-weight: 800; font-size: 1rem; }
     .alert-body { font-size: 0.9rem; color: #4A5568; margin-bottom: 15px; }
     .ins-btn { display: block; width: 100%; background: #C53030; color: white; text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 10px rgba(197, 48, 48, 0.3); transition: transform 0.1s; }
     .ins-btn:active { transform: scale(0.98); }
+
     .btn-share { background: #FEE500; color: #3c1e1e; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
     .btn-retry { background: white; border: 2px solid #eee; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; color: #666; cursor: pointer; margin-top: 10px;}
-    
-    /* 광고 컨테이너 스타일 (빈 공간 확보) */
+
     .ad-area { width: 100%; min-height: 100px; background: #f8f9fa; margin-top: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 0.8rem; }
-    .ad-loading { width: 300px; height: 250px; background: #f1f2f6; border-radius: 15px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: #bdc3c7; font-weight: bold; border: 2px dashed #dcdde1; }
   </style>
 </head>
 <body>
@@ -129,7 +211,9 @@
           <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
           <div class="step-text">Step <span id="q-idx">1</span> / 7</div>
         </div>
+        
         <div class="question-category" id="q-cat">CATEGORY</div>
+        
         <div class="question-box">
           <h2 id="q-text">질문 텍스트...</h2>
           <button class="option-btn" onclick="nextQuestion(0)">
@@ -200,7 +284,7 @@
   </div>
 
   <script>
-    // 1. 데이터베이스 (이미지 링크는 나중에 Imgur 등으로 교체하세요)
+    // 1. 데이터베이스 (이미지 링크: V9.4에서 사용한 귀여운 만화 이미지 유지)
     const dogs = [
       { name: "핵인싸 골든 리트리버", img: "https://i.imgur.com/gK8eP3R.png", 
         traits: [10, 8, 10], tag: "#천사견",
@@ -255,11 +339,11 @@
     const questions = [
       { cat: "🏠 Reality", q: "현재 거주하고 계신 환경은?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
       { cat: "❤️ Personality", q: "주말 아침, 이상적인 휴식은?", a: "침대와 한 몸이 되어 넷플릭스", b: "일단 밖으로 나가서 에너지 발산!", impact: [0, 0, 3] },
-      { cat: "🧹 Reality", q: "검은 옷에 하얀 털이 묻는다면?", a: "절대 싫어! 돌돌이 필수.", b: "강아지 털은 패션이지! 괜찮다.", impact: [0, -1, 0] },
+      { cat: "🧹 Reality", q: "검은 옷에 하얀 털이 묻는다면?", a: "절대 싫어! 돌돌이 필수.", b: "강아지 털은 패션이지! 괜찮다。", impact: [0, -1, 0] },
       { cat: "❤️ Personality", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
       { cat: "⏰ Reality", q: "하루 산책, 얼마나 가능하신가요?", a: "30분 내외 (바쁨)", b: "1시간 이상 (여유로움)", impact: [0, 0, 2] },
       { cat: "❤️ Personality", q: "낯선 사람이 말을 걸어온다면?", a: "부담스럽다.. 자리를 피한다.", b: "오! 반가워요! 금방 친해진다.", impact: [2, 0, 0] },
-      { cat: "💰 Reality", q: "대형견은 병원비/식비가 3배입니다.", a: "현실적으로 부담된다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] }
+      { cat: "💰 Reality", q: "대형견은 병원비/식비가 3배입니다.", a: "현실적으로 부담된다.", b: "상관없다. 든든한 게 좋다。", impact: [0, -2, 0] }
     ];
 
     let qIdx = 0;
@@ -318,7 +402,7 @@
       if (matchScore > 98) matchScore = 98;
       if (matchScore < 70) matchScore = 70;
 
-      // 결과 및 이미지 렌더링
+      // 结果渲染
       document.getElementById('res-name').innerText = bestDog.name;
       document.getElementById('res-img').src = bestDog.img; 
       document.getElementById('res-desc').innerText = bestDog.desc;
@@ -328,7 +412,7 @@
       document.getElementById('res-health').innerText = bestDog.health;
       document.getElementById('ins-btn-text').innerText = bestDog.name.split(' ').pop() + " 보험료 10초 확인 >";
 
-      // 차트 애니메이션 (V9.2 버그 수정 적용)
+      // 图表同步渲染
       window.requestAnimationFrame(() => {
         document.getElementById('score-chem').style.width = (bestDog.traits[0] * 10) + "%";
         document.getElementById('score-env').style.width = (bestDog.traits[1] * 10) + "%";
