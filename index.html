@@ -8,6 +8,7 @@
   
   <meta name="description" content="나의 성격, 거주 환경, 활동량을 분석하여 가장 적합한 견종을 추천해주는 AI 반려견 매칭 테스트입니다.">
   <meta name="keywords" content="강아지 MBTI, 반려견 테스트, 견종 추천, 아파트 강아지, 펫 보험">
+  <link rel="canonical" href="https://pet.smartkrinsurance.com/">
   
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1076/1076928.png" />
   
@@ -28,31 +29,47 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       margin: 0; padding: 0;
-      width: 100%; min-height: 100vh;
+      width: 100%;
+      /* 移除 min-height限制，让页面自然流动 */
     }
 
     #app-container {
-      width: 100%; max-width: 500px; margin: 0 auto;
-      background: var(--white); min-height: 100vh;
+      width: 100%; max-width: 500px; margin: 0 auto; /* 物理居中 */
+      background: var(--white);
       box-shadow: var(--shadow);
       display: flex; flex-direction: column; position: relative;
+      /* 这里的 min-height 不要设为 100vh，让 main 去撑开 */
     }
 
-    header { padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+    header { 
+      padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; 
+      border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); 
+      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px);
+    }
     header i { color: var(--primary-color); margin-right: 5px; }
 
-    /* ★★★ 핵심 수정: main 영역을 화면 높이만큼 강제로 늘려서 푸터를 아래로 밀어냄 ★★★ */
+    /* ★★★ 核心修正点 ★★★ */
     main { 
       flex: 1; 
       padding: 20px; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
+      /* 这里的 justify-content: center 会让内容垂直居中，看起来更像 APP */
+      justify-content: center; 
       text-align: center;
-      min-height: 100vh; /* 이 설정 때문에 푸터가 처음엔 안 보입니다 */
+      /* 强制 Main 区域高度至少为屏幕高度 */
+      /* 这样 Footer 就会被挤到屏幕可视区域之外 */
+      min-height: 100vh; 
     }
 
-    .screen { display: none; width: 100%; animation: fadeIn 0.5s ease; }
+    .screen { 
+      display: none; 
+      width: 100%; 
+      animation: fadeIn 0.5s ease;
+      /* 确保每个屏幕内容不会太拥挤 */
+      padding-bottom: 40px; 
+    }
     .screen.active { display: flex; flex-direction: column; align-items: center; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -82,12 +99,8 @@
     .radar-label { width: 70px; text-align: left; font-size: 0.85rem; font-weight: bold; color: #555; }
     .radar-bar-bg { flex: 1; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
     .radar-bar-fill { height: 100%; width: 0%; transition: width 1.5s ease-out; border-radius: 5px; }
-    
-    .bar-1 { background: var(--primary-color); }
-    .bar-2 { background: var(--secondary-color); }
-    .bar-3 { background: var(--accent-color); }
+    .bar-1 { background: var(--primary-color); } .bar-2 { background: var(--secondary-color); } .bar-3 { background: var(--accent-color); }
 
-    /* Other Styles */
     .option-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
     .option-btn:hover { border-color: var(--primary-color); background-color: #F8F7FF; color: var(--primary-color); }
     
@@ -107,12 +120,9 @@
     .btn-retry { background: white; border: 2px solid #eee; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; color: #666; cursor: pointer; margin-top: 10px;}
     .ad-area { background: #f8f9fa; padding: 20px; text-align: center; color: #bbb; font-size: 0.8rem; margin-top: 20px; width: 100%; border-radius: 10px; }
 
-    /* ★★★ Footer & Modal ★★★ */
-    footer { background: #2D3436; color: #b2bec3; padding: 40px 20px; text-align: center; font-size: 0.8rem; line-height: 1.8; margin-top: auto; }
+    footer { padding: 40px 20px; background: #2D3436; color: #b2bec3; text-align: center; font-size: 0.8rem; line-height: 1.8; }
     footer a { color: #dfe6e9; text-decoration: none; }
-    footer .legal-links { margin-bottom: 15px; }
     footer .legal-links span { margin: 0 10px; cursor: pointer; text-decoration: underline; }
-    footer .family-site { margin-top: 15px; font-weight: bold; color: #fff; display: block; }
 
     /* Modals */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
@@ -130,9 +140,19 @@
     <main>
       <div id="screen-start" class="screen active">
         <img class="hero-img" alt="main"/>
+        
+        <div class="tags-cloud">
+          <span class="tag-bubble highlight">#성격매칭</span>
+          <span class="tag-bubble">#거주환경</span>
+          <span class="tag-bubble">#활동량</span>
+          <span class="tag-bubble highlight">#양육난이도</span>
+        </div>
+
         <h1>나의 운명적<br/><span>반려견 찾기</span></h1>
-        <p class="subtitle">성격(MBTI)과 현실 조건을 고려한<br/>AI 정밀 분석 시스템</p>
+        <p class="subtitle">나의 <strong>성격(MBTI)</strong>과 <strong>현실 조건</strong>을<br/>모두 고려한 AI 정밀 분석 시스템</p>
+
         <button class="btn-primary" onclick="startTest()">매칭 시작하기</button>
+        
         <div id="ad-container-main" class="ad-area">Sponsored AD</div>
       </div>
 
@@ -201,7 +221,7 @@
         <span onclick="openModal('privacy')">개인정보처리방침</span>
       </div>
       <p>Copyright © 2025 Pet Match Lab. All rights reserved.</p>
-      <a href="https://smartkrinsurance.com" class="family-site" target="_blank">
+      <a href="https://smartkrinsurance.com" class="family-site" target="_blank" style="color:#dfe6e9; text-decoration:none; display:block; margin-top:10px; font-weight:bold;">
         Operated by Smart KR Insurance <i class="fas fa-external-link-alt" style="font-size:0.8rem"></i>
       </a>
     </footer>
@@ -217,7 +237,7 @@
 
   <script>
     //<![CDATA[
-    // 1. 데이터베이스 (이미지 경로: GitHub images 폴더)
+    // 1. 데이터베이스 (이미지: V12.1 修复版与文件名严格对应)
     const dogs = [
       { name: "핵인싸 골든 리트리버", img: "./images/golden.jpg", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", health: "고관절 이형성증 및 피부질환 주의" },
       { name: "똑쟁이 토이 푸들", img: "./images/poodle.jpeg", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 최고!", health: "슬개골 탈구 및 외이염 주의" },
@@ -237,7 +257,6 @@
       { name: "미소천사 사모예드", img: "./images/samoyed.jpeg", traits: [9, 9, 9], tag: "#솜사탕", desc: "항상 웃고 있는 얼굴의 사모예드! 엄청난 털 빠짐과 활동량을 감당할 수 있다면, 세상에서 가장 행복한 반려견이 됩니다.", health: "고관절 및 당뇨병 주의" }
     ];
 
-    // 2. 질문지 (12문항)
     const questions = [
       { cat: "🏠 거주 환경", q: "현재 거주하고 계신 주거 형태는?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
       { cat: "❤️ 성격 매칭", q: "주말 아침, 이상적인 휴식 방법은?", a: "이불 밖은 위험해.. 집콕 힐링", b: "날씨 좋은데 무조건 나가야지!", impact: [0, 0, 3] },
@@ -257,19 +276,9 @@
     let userScore = [5, 5, 3]; 
     let currentDog = null;
 
-    // ★ 스크롤 최상단 이동 함수
     function scrollToTop() { window.scrollTo(0, 0); }
 
-    // ★ 이미지 미리 로딩
-    function preloadImages() {
-      dogs.forEach(dog => {
-        const img = new Image();
-        img.src = dog.img;
-      });
-    }
-
     function startTest() {
-      preloadImages();
       document.querySelector('#screen-start').classList.remove('active');
       document.querySelector('#screen-question').classList.add('active');
       scrollToTop();
@@ -304,6 +313,7 @@
       document.querySelector('#screen-loading').classList.add('active');
       scrollToTop();
       
+      // Dynamic Loading Text
       const msgs = ["🏠 거주 환경 분석 중...", "🧬 성향 데이터 대조 중...", "🏥 유전적 건강 체크 중...", "✨ 최종 매칭 완료!"];
       let i = 0;
       const textInterval = setInterval(() => {
@@ -349,6 +359,7 @@
       document.querySelector('#screen-result').classList.add('active');
       scrollToTop();
       
+      // Trigger Confetti
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
 
@@ -363,11 +374,12 @@
             navigator.share(shareData).catch(console.error);
         } else {
             navigator.clipboard.writeText(shareData.title + '\n' + shareData.url).then(() => {
-                alert("🔗 결과 링크가 복사되었습니다!");
+                alert("🔗 결과 링크와 문구가 복사되었습니다!");
             });
         }
     }
 
+    // Modal Functions
     function openModal(type) {
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
