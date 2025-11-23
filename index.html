@@ -40,7 +40,7 @@
   <script src="ads.js" defer></script>
 
   <style>
-    /* 기본 CSS 변수 */
+    /* CSS Reset & Variables */
     :root {
       --bg-color: #F8F9FA; --primary-color: #6C5CE7; --secondary-color: #00CEC9;
       --accent-color: #FF7675; --text-color: #2D3436; --white: #ffffff;
@@ -49,24 +49,30 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
+    /* ★★★ [修正] 这里的 body 样式恢复为 V9.5 的稳定版 ★★★ */
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      display: flex; justify-content: center;
+      /* 移除 flex，改用 block layout 防止跳动 */
+      margin: 0;
+      padding: 0;
+      width: 100%;
       min-height: 100vh;
-      /* 底部广告空间预留 */
-      padding-bottom: 60px; 
+      padding-bottom: 60px; /* 底部广告空间 */
     }
 
+    /* ★★★ [修正] 这里的 container 使用 margin: 0 auto 强制居中 ★★★ */
     #app-container {
-      width: 100%; max-width: 500px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto; /* 核心居中代码 */
       background: var(--white);
       min-height: 100vh;
       box-shadow: var(--shadow);
-      display: flex; flex-direction: column;
+      display: flex;
+      flex-direction: column;
       position: relative;
-      margin: 0 auto;
     }
 
     header { 
@@ -134,7 +140,7 @@
     .desc-box { text-align: left; line-height: 1.7; font-size: 0.95rem; color: #444; margin: 0 20px 30px; padding: 20px; background: #fff; border: 2px solid #f1f2f6; border-radius: 15px; }
     .desc-title { font-weight: bold; color: var(--primary-color); margin-bottom: 5px; display: block; }
 
-    /* ★ 核心收益区: Insurance Box */
+    /* Insurance Box */
     .insurance-alert { background: #FFF5F5; border: 1px solid #FEB2B2; border-radius: var(--radius); padding: 20px; margin: 0 20px 25px; text-align: left; position: relative; overflow: hidden; }
     .insurance-alert::before { content:''; position: absolute; top:0; left:0; width: 5px; height: 100%; background: #FC8181; }
     .alert-header { display: flex; align-items: center; margin-bottom: 10px; color: #C53030; font-weight: 800; font-size: 1rem; }
@@ -157,7 +163,7 @@
     .loading-text { font-family: 'Jua'; font-size: 1.5rem; margin-bottom: 10px; }
     .loading-sub { color: #888; font-size: 0.9rem; }
 
-    /* ★ SEO Content Section (Hidden from main view but readable) */
+    /* SEO Content Section */
     .seo-content { background: #F1F2F6; padding: 30px 20px; margin-top: 40px; text-align: left; border-radius: 20px 20px 0 0; }
     .seo-content h3 { font-size: 1.1rem; margin-bottom: 10px; color: #2D3436; }
     .seo-content p { font-size: 0.85rem; color: #636E72; line-height: 1.6; margin-bottom: 15px; }
@@ -171,7 +177,7 @@
     footer .legal-links span { margin: 0 10px; cursor: pointer; text-decoration: underline; }
     footer .family-site { margin-top: 15px; font-weight: bold; color: #fff; display: block; }
 
-    /* Modals (Legal) */
+    /* Modals */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
     .modal-content { background: white; width: 90%; max-width: 400px; max-height: 80vh; padding: 20px; border-radius: 15px; overflow-y: auto; text-align: left; position: relative; }
     .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #aaa; }
@@ -209,7 +215,7 @@
           <h3>🐕 나에게 맞는 강아지는?</h3>
           <p>
             반려견 입양을 고민 중이신가요? 단순히 귀여운 외모만 보고 선택하면 파양이나 유기 등 안타까운 상황이 발생할 수 있습니다. 
-            본 테스트는 견주의 성향(MBTI), 거주 형태(아파트/주택), 경제적 여건, 활동량을 종합적으로 분석하여 실패 없는 입양을 돕습니다.
+            본 테스트는 견주의 성향(MBTI), 거주 환경(아파트/주택), 경제적 여건, 활동량을 종합적으로 분석하여 실패 없는 입양을 돕습니다.
           </p>
           <h3>📊 주요 분석 견종</h3>
           <div class="seo-tags">
@@ -318,7 +324,7 @@
 
   <script>
     //<![CDATA[
-    // 1. 데이터베이스 (이미지: V9.4 귀여운 버전 유지)
+    // 1. 데이터베이스
     const dogs = [
       { name: "핵인싸 골든 리트리버", img: "https://i.imgur.com/gK8eP3R.png", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", health: "고관절 이형성증 및 피부질환 주의" },
       { name: "똑쟁이 토이 푸들", img: "https://i.imgur.com/rN5hP1A.png", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 있을 거예요.", health: "슬개골 탈구 및 외이염 주의" },
@@ -340,7 +346,7 @@
       { cat: "🧹 Reality", q: "검은 옷에 하얀 털이 묻는다면?", a: "절대 싫어! 돌돌이 필수.", b: "강아지 털은 패션이지! 괜찮다.", impact: [0, -1, 0] },
       { cat: "❤️ Personality", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
       { cat: "⏰ Reality", q: "하루 산책, 얼마나 가능하신가요?", a: "30분 내외 (바쁨)", b: "1시간 이상 (여유로움)", impact: [0, 0, 2] },
-      { cat: "❤️ Personality", q: "낯선 사람이 말을 걸어온다면?", a: "부담스럽다.. 자리를 피한다。", b: "오! 반가워요! 금방 친해진다.", impact: [2, 0, 0] },
+      { cat: "❤️ Personality", q: "낯선 사람이 말을 걸어온다면?", a: "부담스럽다.. 자리를 피한다.", b: "오! 반가워요! 금방 친해진다.", impact: [2, 0, 0] },
       { cat: "💰 Reality", q: "대형견은 병원비/식비가 3배입니다.", a: "현실적으로 부담된다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] }
     ];
 
