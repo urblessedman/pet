@@ -8,7 +8,6 @@
   
   <meta name="description" content="나의 성격, 거주 환경, 활동량을 분석하여 가장 적합한 견종을 추천해주는 AI 반려견 매칭 테스트입니다.">
   <meta name="keywords" content="강아지 MBTI, 반려견 테스트, 견종 추천, 아파트 강아지, 펫 보험">
-  <link rel="canonical" href="https://pet.smartkrinsurance.com/">
   
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1076/1076928.png" />
   
@@ -24,56 +23,55 @@
     :root { --bg-color: #F8F9FA; --primary-color: #6C5CE7; --secondary-color: #00CEC9; --accent-color: #FF7675; --text-color: #2D3436; --white: #ffffff; --shadow: 0 10px 30px rgba(108, 92, 231, 0.15); --radius: 20px; }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
+    /* ★ 중요: Body는 블록 레이아웃 유지 (Flex 사용 금지) */
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       margin: 0; padding: 0;
-      width: 100%;
-      /* 移除 min-height限制，让页面自然流动 */
+      width: 100%; 
+      overflow-x: hidden; /* 가로 스크롤 방지 */
     }
 
+    /* ★ 중요: 컨테이너 물리적 중앙 정렬 */
     #app-container {
-      width: 100%; max-width: 500px; margin: 0 auto; /* 物理居中 */
-      background: var(--white);
+      width: 100%; 
+      max-width: 500px; 
+      margin: 0 auto; 
+      background: var(--white); 
       box-shadow: var(--shadow);
-      display: flex; flex-direction: column; position: relative;
-      /* 这里的 min-height 不要设为 100vh，让 main 去撑开 */
+      position: relative;
+      min-height: 100vh;
+      display: flex; 
+      flex-direction: column;
     }
 
-    header { 
-      padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; 
-      border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); 
-      position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px);
-    }
+    header { padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
     header i { color: var(--primary-color); margin-right: 5px; }
 
-    /* ★★★ 核心修正点 ★★★ */
+    /* ★★★ 핵심 수정: Main 높이를 강제로 100vh로 지정하여 푸터를 화면 밖으로 밀어냄 ★★★ */
     main { 
       flex: 1; 
       padding: 20px; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      /* 这里的 justify-content: center 会让内容垂直居中，看起来更像 APP */
-      justify-content: center; 
+      justify-content: center; /* 내용 수직 중앙 정렬 */
       text-align: center;
-      /* 强制 Main 区域高度至少为屏幕高度 */
-      /* 这样 Footer 就会被挤到屏幕可视区域之外 */
+      /* 화면 전체 높이 확보 -> 푸터는 자연스럽게 스크롤 아래로 내려감 */
       min-height: 100vh; 
     }
 
+    /* 화면 전환 애니메이션 */
     .screen { 
       display: none; 
       width: 100%; 
-      animation: fadeIn 0.5s ease;
-      /* 确保每个屏幕内容不会太拥挤 */
-      padding-bottom: 40px; 
+      animation: fadeIn 0.5s ease; 
     }
-    .screen.active { display: flex; flex-direction: column; align-items: center; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; width: 100%; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Hero & Components */
+    /* Components */
     .hero-img { content: url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=600'); width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius); margin-bottom: 25px; }
     h1 { font-family: 'Jua', sans-serif; font-size: 2.1rem; margin-bottom: 10px; line-height: 1.3; color: #111; }
     h1 span { color: var(--primary-color); }
@@ -88,7 +86,7 @@
       border-radius: 50%; object-fit: cover; 
       border: 8px solid white; 
       box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
-      background-color: #eee;
+      background-color: #f0f0f0; /* 로딩 전 회색 배경 */
       margin-bottom: 20px;
     }
     .match-label { background: var(--secondary-color); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; display: inline-block; }
@@ -99,8 +97,12 @@
     .radar-label { width: 70px; text-align: left; font-size: 0.85rem; font-weight: bold; color: #555; }
     .radar-bar-bg { flex: 1; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
     .radar-bar-fill { height: 100%; width: 0%; transition: width 1.5s ease-out; border-radius: 5px; }
-    .bar-1 { background: var(--primary-color); } .bar-2 { background: var(--secondary-color); } .bar-3 { background: var(--accent-color); }
+    
+    .bar-1 { background: var(--primary-color); }
+    .bar-2 { background: var(--secondary-color); }
+    .bar-3 { background: var(--accent-color); }
 
+    /* Options */
     .option-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
     .option-btn:hover { border-color: var(--primary-color); background-color: #F8F7FF; color: var(--primary-color); }
     
@@ -120,7 +122,13 @@
     .btn-retry { background: white; border: 2px solid #eee; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; color: #666; cursor: pointer; margin-top: 10px;}
     .ad-area { background: #f8f9fa; padding: 20px; text-align: center; color: #bbb; font-size: 0.8rem; margin-top: 20px; width: 100%; border-radius: 10px; }
 
-    footer { padding: 40px 20px; background: #2D3436; color: #b2bec3; text-align: center; font-size: 0.8rem; line-height: 1.8; }
+    /* Footer */
+    footer { 
+      background: #2D3436; color: #b2bec3; 
+      padding: 40px 20px; /* 넉넉한 패딩 */
+      text-align: center; font-size: 0.8rem; line-height: 1.8; 
+      /* 메인 컨텐츠가 끝나고 스크롤해야 보이도록 배치됨 */
+    }
     footer a { color: #dfe6e9; text-decoration: none; }
     footer .legal-links span { margin: 0 10px; cursor: pointer; text-decoration: underline; }
 
@@ -140,19 +148,9 @@
     <main>
       <div id="screen-start" class="screen active">
         <img class="hero-img" alt="main"/>
-        
-        <div class="tags-cloud">
-          <span class="tag-bubble highlight">#성격매칭</span>
-          <span class="tag-bubble">#거주환경</span>
-          <span class="tag-bubble">#활동량</span>
-          <span class="tag-bubble highlight">#양육난이도</span>
-        </div>
-
         <h1>나의 운명적<br/><span>반려견 찾기</span></h1>
-        <p class="subtitle">나의 <strong>성격(MBTI)</strong>과 <strong>현실 조건</strong>을<br/>모두 고려한 AI 정밀 분석 시스템</p>
-
+        <p class="subtitle">성격(MBTI)과 현실 조건을 고려한<br/>AI 정밀 분석 시스템</p>
         <button class="btn-primary" onclick="startTest()">매칭 시작하기</button>
-        
         <div id="ad-container-main" class="ad-area">Sponsored AD</div>
       </div>
 
@@ -237,7 +235,6 @@
 
   <script>
     //<![CDATA[
-    // 1. 데이터베이스 (이미지: V12.1 修复版与文件名严格对应)
     const dogs = [
       { name: "핵인싸 골든 리트리버", img: "./images/golden.jpg", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", health: "고관절 이형성증 및 피부질환 주의" },
       { name: "똑쟁이 토이 푸들", img: "./images/poodle.jpeg", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 최고!", health: "슬개골 탈구 및 외이염 주의" },
@@ -313,7 +310,6 @@
       document.querySelector('#screen-loading').classList.add('active');
       scrollToTop();
       
-      // Dynamic Loading Text
       const msgs = ["🏠 거주 환경 분석 중...", "🧬 성향 데이터 대조 중...", "🏥 유전적 건강 체크 중...", "✨ 최종 매칭 완료!"];
       let i = 0;
       const textInterval = setInterval(() => {
@@ -358,8 +354,6 @@
       document.querySelector('#screen-loading').classList.remove('active');
       document.querySelector('#screen-result').classList.add('active');
       scrollToTop();
-      
-      // Trigger Confetti
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
     }
 
@@ -374,12 +368,11 @@
             navigator.share(shareData).catch(console.error);
         } else {
             navigator.clipboard.writeText(shareData.title + '\n' + shareData.url).then(() => {
-                alert("🔗 결과 링크와 문구가 복사되었습니다!");
+                alert("🔗 링크가 복사되었습니다!");
             });
         }
     }
 
-    // Modal Functions
     function openModal(type) {
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
