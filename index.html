@@ -15,7 +15,18 @@
     /* 기존 CSS 스타일 그대로 유지 (생략 없이 그대로 사용하세요) */
     :root { --bg-color: #F8F9FA; --primary-color: #6C5CE7; --secondary-color: #00CEC9; --accent-color: #FF7675; --text-color: #2D3436; --white: #ffffff; --shadow: 0 10px 30px rgba(108, 92, 231, 0.15); --radius: 20px; }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; min-height: 100vh; }
+    body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  /* ★ 修改点：确保 body 自身没有默认边距，且强制水平居中 */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+}
     #app-container { width: 100%; max-width: 500px; margin: 0 auto; background: var(--white); min-height: 100vh; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; }
     header { padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 10; backdrop-filter: blur(5px); }
     header i { color: var(--primary-color); margin-right: 5px; }
