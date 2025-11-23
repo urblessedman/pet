@@ -1,133 +1,21 @@
 // 1. 데이터베이스 (이미지 경로: GitHub images 폴더 연결)
 const dogs = [
-  { 
-    name: "핵인싸 골든 리트리버", 
-    img: "./images/golden.jpg", // 주의: 이 파일만 .jpg 입니다.
-    traits: [10, 8, 10], 
-    tag: "#천사견", 
-    desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", 
-    health: "고관절 이형성증 및 피부질환 주의" 
-  },
-  { 
-    name: "똑쟁이 토이 푸들", 
-    img: "./images/poodle.jpeg", 
-    traits: [9, 3, 5], 
-    tag: "#지능1위", 
-    desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 최고!", 
-    health: "슬개골 탈구 및 외이염 주의" 
-  },
-  { 
-    name: "시크한 시바견", 
-    img: "./images/shiba.jpeg", 
-    traits: [2, 5, 6], 
-    tag: "#밀당고수", 
-    desc: "독립적인 당신과 잘 맞아요. 서로의 영역을 존중하며 쿨한 동거가 가능합니다. 단, 엄청난 털 빠짐은 각오하세요!", 
-    health: "아토피 피부염 및 알레르기 주의" 
-  },
-  { 
-    name: "깨발랄 비글", 
-    img: "./images/beagle.jpeg", 
-    traits: [9, 6, 10], 
-    tag: "#에너지왕", 
-    desc: "지루한 건 딱 질색인 당신! 비글의 넘치는 에너지를 감당할 수 있는 유일한 분이시군요. 매일이 시트콤입니다.", 
-    health: "비만 및 귀 염증(외이염) 주의" 
-  },
-  { 
-    name: "솜사탕 비숑", 
-    img: "./images/bichon.jpeg", 
-    traits: [9, 4, 7], 
-    tag: "#힐링견", 
-    desc: "다정다감한 성격의 당신. 비숑의 폭풍 애교에 매일 녹아내릴 거예요. 털 관리에 정성을 쏟을 준비만 하시면 됩니다!", 
-    health: "백내장 및 슬개골 탈구 주의" 
-  },
-  { 
-    name: "작은 거인 치와와", 
-    img: "./images/chihuahua.jpeg", 
-    traits: [6, 1, 3], 
-    tag: "#내사랑", 
-    desc: "내 사람 챙기기를 좋아하는 당신. 치와와는 질투가 많아 당신만을 바라볼 거예요. 좁은 실내에서도 키우기 좋습니다.", 
-    health: "치아 관리 및 두개골 질환 주의" 
-  },
-  { 
-    name: "엉뚱매력 웰시코기", 
-    img: "./images/corgi.jpeg", 
-    traits: [8, 6, 9], 
-    tag: "#식탐왕", 
-    desc: "먹는 것과 노는 것을 좋아하는 당신! 코기와 함께 맛집 투어도 하고 산책도 하며 즐거운 일상을 보낼 수 있어요.", 
-    health: "허리 디스크(IVDD) 및 비만 주의" 
-  },
-  { 
-    name: "우아한 몰티즈", 
-    img: "./images/maltese.jpeg", 
-    traits: [8, 2, 4], 
-    tag: "#국민반려견", 
-    desc: "집에서 쉬는 걸 좋아하는 당신. 작고 하얀 몰티즈는 최고의 룸메이트입니다. 참지 않는 성격이니 오냐오냐는 금물!", 
-    health: "유루증(눈물자국) 및 심장질환 주의" 
-  },
-  { 
-    name: "카리스마 허스키", 
-    img: "./images/husky.jpeg", 
-    traits: [5, 9, 10], 
-    tag: "#엉뚱함", 
-    desc: "자유로운 영혼의 소유자! 허스키의 엉뚱함과 대화하는 듯한 하울링이 당신의 삶을 지루하지 않게 해줄 거예요.", 
-    health: "안구 질환 및 고관절 주의" 
-  },
-  { 
-    name: "천재견 보더콜리", 
-    img: "./images/collie.jpeg", 
-    traits: [7, 8, 10], 
-    tag: "#워커홀릭", 
-    desc: "성취욕이 강하고 활동적인 당신. 보더콜리와 함께 프리스비나 어질리티를 도전해보세요. 최고의 파트너가 될 겁니다.", 
-    health: "관절 관리 및 결막염 주의" 
-  },
-  { 
-    name: "느긋한 시츄", 
-    img: "./images/shihtzu.jpeg", 
-    traits: [5, 2, 2], 
-    tag: "#평화주의자", 
-    desc: "여유롭고 느긋한 성격의 당신. 짖지 않고 얌전한 시츄와 함께 조용하고 평화로운 힐링 라이프를 즐겨보세요.", 
-    health: "안구 건조증 및 호흡기 질환 주의" 
-  },
-  { 
-    name: "개성파 프렌치불독", 
-    img: "./images/frenchie.jpeg", 
-    traits: [6, 4, 4], 
-    tag: "#볼매", 
-    desc: "유니크한 매력을 알아보는 당신. 무뚝뚝해 보이지만 알고 보면 정이 많은 불독과 깊은 우정을 쌓을 수 있어요.", 
-    health: "단두종 호흡기 증후군 및 피부병 주의" 
-  },
-  { 
-    name: "앙큼상큼 포메라니안", 
-    img: "./images/pomeranian.jpeg", 
-    traits: [7, 2, 4], 
-    tag: "#인형미모", 
-    desc: "작지만 용감하고 자기애가 강한 포메! 화려한 털 관리와 앙칼진 성격을 받아줄 수 있는 당신에게 추천합니다.", 
-    health: "슬개골 탈구 및 골절 주의" 
-  },
-  { 
-    name: "용감한 닥스훈트", 
-    img: "./images/dachshund.jpeg", 
-    traits: [8, 3, 6], 
-    tag: "#숏다리", 
-    desc: "호기심 많고 고집 센 사냥개 본능! 닥스훈트의 고집을 귀엽게 봐줄 수 있는 인내심 많은 당신과 잘 맞습니다.", 
-    health: "허리 디스크 및 비만 주의" 
-  },
-  { 
-    name: "요정 요크셔 테리어", 
-    img: "./images/yorkie.jpeg", 
-    traits: [8, 2, 3], 
-    tag: "#움직이는보석", 
-    desc: "화려한 털과 도도한 성격의 요키. 주인에게는 애교쟁이지만 낯선 이에게는 까칠한 매력이 있죠. 털 관리는 필수!", 
-    health: "기관지 협착 및 치아 질환 주의" 
-  },
-  { 
-    name: "미소천사 사모예드", 
-    img: "./images/samoyed.jpeg", 
-    traits: [9, 9, 9], 
-    tag: "#솜사탕", 
-    desc: "항상 웃고 있는 얼굴의 사모예드! 엄청난 털 빠짐과 활동량을 감당할 수 있다면, 세상에서 가장 행복한 반려견이 됩니다.", 
-    health: "고관절 및 당뇨병 주의" 
-  }
+  { name: "핵인싸 골든 리트리버", img: "./images/golden.jpg", traits: [10, 8, 10], tag: "#천사견", desc: "사람을 너무 좋아하는 당신과 긍정왕 리트리버는 환상의 짝꿍입니다! 다만 털 빠짐과 활동량이 많아 넓은 공간과 부지런함이 필요해요.", health: "고관절 이형성증 및 피부질환 주의" },
+  { name: "똑쟁이 토이 푸들", img: "./images/poodle.jpg", traits: [9, 3, 5], tag: "#지능1위", desc: "섬세하고 똑똑한 당신에게 딱! 털 빠짐이 적어 아파트 생활에 최적화되어 있습니다. 눈치가 빨라 교감하는 재미가 최고!", health: "슬개골 탈구 및 외이염 주의" },
+  { name: "시크한 시바견", img: "./images/shiba.jpg", traits: [2, 5, 6], tag: "#밀당고수", desc: "독립적인 당신과 잘 맞아요. 서로의 영역을 존중하며 쿨한 동거가 가능합니다. 단, 엄청난 털 빠짐은 각오하세요!", health: "아토피 피부염 및 알레르기 주의" },
+  { name: "깨발랄 비글", img: "./images/beagle.jpg", traits: [9, 6, 10], tag: "#에너지왕", desc: "지루한 건 딱 질색인 당신! 비글의 넘치는 에너지를 감당할 수 있는 유일한 분이시군요. 매일이 시트콤입니다.", health: "비만 및 귀 염증(외이염) 주의" },
+  { name: "솜사탕 비숑", img: "./images/bichon.jpg", traits: [9, 4, 7], tag: "#힐링견", desc: "다정다감한 성격의 당신. 비숑의 폭풍 애교에 매일 녹아내릴 거예요. 털 관리에 정성을 쏟을 준비만 하시면 됩니다!", health: "백내장 및 슬개골 탈구 주의" },
+  { name: "작은 거인 치와와", img: "./images/chihuahua.jpg", traits: [6, 1, 3], tag: "#내사랑", desc: "내 사람 챙기기를 좋아하는 당신. 치와와는 질투가 많아 당신만을 바라볼 거예요. 좁은 실내에서도 키우기 좋습니다.", health: "치아 관리 및 두개골 질환 주의" },
+  { name: "엉뚱매력 웰시코기", img: "./images/corgi.jpg", traits: [8, 6, 9], tag: "#식탐왕", desc: "먹는 것과 노는 것을 좋아하는 당신! 코기와 함께 맛집 투어도 하고 산책도 하며 즐거운 일상을 보낼 수 있어요.", health: "허리 디스크(IVDD) 및 비만 주의" },
+  { name: "우아한 몰티즈", img: "./images/maltese.jpg", traits: [8, 2, 4], tag: "#국민반려견", desc: "집에서 쉬는 걸 좋아하는 당신. 작고 하얀 몰티즈는 최고의 룸메이트입니다. 참지 않는 성격이니 오냐오냐는 금물!", health: "유루증(눈물자국) 및 심장질환 주의" },
+  { name: "카리스마 허스키", img: "./images/husky.jpg", traits: [5, 9, 10], tag: "#엉뚱함", desc: "자유로운 영혼의 소유자! 허스키의 엉뚱함과 대화하는 듯한 하울링이 당신의 삶을 지루하지 않게 해줄 거예요.", health: "안구 질환 및 고관절 주의" },
+  { name: "천재견 보더콜리", img: "./images/collie.jpg", traits: [7, 8, 10], tag: "#워커홀릭", desc: "성취욕이 강하고 활동적인 당신. 보더콜리와 함께 프리스비나 어질리티를 도전해보세요. 최고의 파트너가 될 겁니다.", health: "관절 관리 및 결막염 주의" },
+  { name: "느긋한 시츄", img: "./images/shihtzu.jpg", traits: [5, 2, 2], tag: "#평화주의자", desc: "여유롭고 느긋한 성격의 당신. 짖지 않고 얌전한 시츄와 함께 조용하고 평화로운 힐링 라이프를 즐겨보세요.", health: "안구 건조증 및 호흡기 질환 주의" },
+  { name: "개성파 프렌치불독", img: "./images/frenchie.jpg", traits: [6, 4, 4], tag: "#볼매", desc: "유니크한 매력을 알아보는 당신. 무뚝뚝해 보이지만 알고 보면 정이 많은 불독과 깊은 우정을 쌓을 수 있어요.", health: "단두종 호흡기 증후군 및 피부병 주의" },
+  { name: "앙큼상큼 포메라니안", img: "./images/pomeranian.jpg", traits: [7, 2, 4], tag: "#인형미모", desc: "작지만 용감하고 자기애가 강한 포메! 화려한 털 관리와 앙칼진 성격을 받아줄 수 있는 당신에게 추천합니다.", health: "슬개골 탈구 및 골절 주의" },
+  { name: "용감한 닥스훈트", img: "./images/dachshund.jpg", traits: [8, 3, 6], tag: "#숏다리", desc: "호기심 많고 고집 센 사냥개 본능! 닥스훈트의 고집을 귀엽게 봐줄 수 있는 인내심 많은 당신과 잘 맞습니다.", health: "허리 디스크 및 비만 주의" },
+  { name: "요정 요크셔 테리어", img: "./images/yorkie.jpg", traits: [8, 2, 3], tag: "#움직이는보석", desc: "화려한 털과 도도한 성격의 요키. 주인에게는 애교쟁이지만 낯선 이에게는 까칠한 매력이 있죠. 털 관리는 필수!", health: "기관지 협착 및 치아 질환 주의" },
+  { name: "미소천사 사모예드", img: "./images/samoyed.jpg", traits: [9, 9, 9], tag: "#솜사탕", desc: "항상 웃고 있는 얼굴의 사모예드! 엄청난 털 빠짐과 활동량을 감당할 수 있다면, 세상에서 가장 행복한 반려견이 됩니다.", health: "고관절 및 당뇨병 주의" }
 ];
 
 // 2. 질문지 (12문항)
@@ -150,9 +38,21 @@ let qIdx = 0;
 let userScore = [5, 5, 3]; 
 let currentDog = null;
 
+// ★ 스크롤 최상단 이동 함수
 function scrollToTop() { window.scrollTo(0, 0); }
 
+// ★ [핵심] 이미지 미리 로딩하기 (Preloading)
+function preloadImages() {
+  dogs.forEach(dog => {
+    const img = new Image();
+    img.src = dog.img;
+  });
+}
+
 function startTest() {
+  // 테스트 시작 버튼을 누르면, 뒷단에서 이미지를 몰래 다운로드 시작합니다.
+  preloadImages();
+  
   document.querySelector('#screen-start').classList.remove('active');
   document.querySelector('#screen-question').classList.add('active');
   scrollToTop();
@@ -187,6 +87,7 @@ function showLoading() {
   document.querySelector('#screen-loading').classList.add('active');
   scrollToTop();
   
+  // Dynamic Loading Text
   const msgs = ["🏠 거주 환경 분석 중...", "🧬 성향 데이터 대조 중...", "🏥 유전적 건강 체크 중...", "✨ 최종 매칭 완료!"];
   let i = 0;
   const textInterval = setInterval(() => {
@@ -215,11 +116,13 @@ function calculateResult() {
   if (matchScore > 98) matchScore = 98; if (matchScore < 70) matchScore = 70;
 
   document.getElementById('res-name').innerText = bestDog.name;
-  document.getElementById('res-img').src = bestDog.img; 
+  
+  // 이미지 경로 설정
+  document.getElementById('res-img').src = bestDog.img;
+  
   document.getElementById('res-desc').innerText = bestDog.desc;
   document.getElementById('res-tag').innerText = bestDog.tag;
   document.getElementById('match-percent').innerText = matchScore; 
-  
   document.getElementById('res-health').innerText = bestDog.health;
   document.getElementById('ins-btn-text').innerText = bestDog.name.split(' ').pop() + " 보험료 10초 확인 >";
 
@@ -233,6 +136,7 @@ function calculateResult() {
   document.querySelector('#screen-result').classList.add('active');
   scrollToTop();
   
+  // Trigger Confetti
   confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 }
 
@@ -247,7 +151,7 @@ function shareFinalResult() {
         navigator.share(shareData).catch(console.error);
     } else {
         navigator.clipboard.writeText(shareData.title + '\n' + shareData.url).then(() => {
-            alert("🔗 링크가 복사되었습니다!");
+            alert("🔗 결과 링크가 복사되었습니다!");
         });
     }
 }
