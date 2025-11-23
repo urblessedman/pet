@@ -7,6 +7,11 @@
   <title>반려견 매칭 시스템 | 나에게 딱 맞는 강아지 찾기 테스트</title>
   
   <meta name="description" content="나의 성격, 거주 환경, 활동량을 분석하여 가장 적합한 견종을 추천해주는 AI 반려견 매칭 테스트입니다.">
+  <meta name="keywords" content="강아지 MBTI, 반려견 테스트, 견종 추천, 아파트 강아지, 펫 보험">
+  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5789121095939793"
+     crossorigin="anonymous"></script>
+
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1076/1076928.png" />
   
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -14,6 +19,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
   <script src="ads.js" defer></script>
 
   <style>
@@ -21,11 +27,11 @@
     :root { --bg-color: #F8F9FA; --primary-color: #6C5CE7; --secondary-color: #00CEC9; --accent-color: #FF7675; --text-color: #2D3436; --white: #ffffff; --shadow: 0 10px 30px rgba(108, 92, 231, 0.15); --radius: 20px; }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
+    html, body { height: 100%; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      margin: 0; padding: 0;
       width: 100%; 
       overflow-x: hidden;
     }
@@ -35,36 +41,42 @@
       background: var(--white); 
       box-shadow: var(--shadow);
       position: relative;
+      min-height: 100%;
       display: flex; flex-direction: column;
-      /* 최소 높이를 화면보다 길게 설정하여 푸터 강제 숨김 */
-      min-height: 101vh; 
     }
 
-    header { 
-      padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; 
-      border-bottom: 1px solid #eee; background: rgba(255,255,255,0.98); 
-      position: sticky; top: 0; z-index: 100;
-    }
+    header { padding: 18px; text-align: center; font-family: 'Jua', sans-serif; color: var(--text-color); font-size: 1.2rem; border-bottom: 1px solid #eee; background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); flex-shrink: 0; }
     header i { color: var(--primary-color); margin-right: 5px; }
 
-    /* ★★★ 핵심 수정: Main 영역 스타일 ★★★ */
+    /* Main Content */
     main { 
-      flex: 1; 
+      flex: 1 0 auto; 
       padding: 20px; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      justify-content: center; /* 수직 중앙 정렬 */
+      justify-content: center; 
       text-align: center;
-      /* 화면 높이만큼 강제로 확보 */
       min-height: 100vh; 
     }
 
-    .screen { display: none; width: 100%; animation: fadeIn 0.4s ease-out; }
+    .screen { display: none; width: 100%; animation: fadeIn 0.5s ease; padding-bottom: 40px; }
     .screen.active { display: flex; flex-direction: column; align-items: center; width: 100%; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* UI 요소 스타일 */
+    /* --- 视觉填充元素 (填补空白) --- */
+    .q-visual-icon {
+      font-size: 4rem;
+      margin: 10px 0 20px 0;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-10px);}
+      60% {transform: translateY(-5px);}
+    }
+
+    /* Components */
     .hero-img { width: 100%; height: 260px; object-fit: cover; border-radius: var(--radius); margin-bottom: 25px; background-color: #eee; }
     h1 { font-family: 'Jua', sans-serif; font-size: 2.1rem; margin-bottom: 10px; line-height: 1.3; color: #111; }
     h1 span { color: var(--primary-color); }
@@ -73,21 +85,31 @@
     .btn-primary { background: linear-gradient(135deg, var(--primary-color), #a29bfe); color: white; border: none; padding: 18px 0; width: 100%; font-size: 1.2rem; border-radius: var(--radius); font-weight: 700; font-family: 'Jua'; cursor: pointer; box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3); transition: transform 0.1s; }
     .btn-primary:active { transform: scale(0.98); }
 
-    /* Result Styles */
+    /* Question Styles */
+    .progress-wrapper { width: 100%; margin-bottom: 20px; }
+    .progress-bar { width: 100%; height: 10px; background: #E5E7EB; border-radius: 10px; margin-bottom: 10px; position: relative; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.3s; border-radius: 10px; }
+    .step-text { text-align: right; font-size: 0.85rem; color: #888; font-weight: bold; }
+
+    .question-box h2 { font-family: 'Jua', sans-serif; font-size: 1.6rem; margin-bottom: 30px; line-height: 1.4; color: #2D3436; word-break: keep-all; }
+    
+    .option-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1.05rem; font-weight: 500; color: #444; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+    .option-btn:hover { border-color: var(--primary-color); background-color: #F8F7FF; color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+    /* Result & Chart */
     .result-img { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 8px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); background-color: #f0f0f0; margin-bottom: 20px; }
     .match-label { background: var(--secondary-color); color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; display: inline-block; }
     
-    /* Chart */
     .radar-box { background: #F8F9FA; border-radius: 15px; padding: 20px; margin: 0 0 25px 0; width: 100%; }
     .radar-row { display: flex; align-items: center; margin-bottom: 10px; }
     .radar-label { width: 70px; text-align: left; font-size: 0.85rem; font-weight: bold; color: #555; }
     .radar-bar-bg { flex: 1; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
-    .radar-bar-fill { height: 100%; width: 0%; transition: width 1.0s ease-out; border-radius: 5px; }
+    .radar-bar-fill { height: 100%; width: 0%; transition: width 1.5s ease-out; border-radius: 5px; }
     .bar-1 { background: var(--primary-color); } .bar-2 { background: var(--secondary-color); } .bar-3 { background: var(--accent-color); }
 
-    .option-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: 2px solid #F0F2F5; border-radius: 18px; background: white; font-size: 1rem; font-weight: 500; color: #444; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
-    .progress-bar { width: 100%; height: 8px; background: #E5E7EB; border-radius: 10px; margin-bottom: 30px; }
-    .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: width 0.3s; border-radius: 10px; }
+    .loading-container { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .dna-spinner { font-size: 3rem; color: var(--primary-color); animation: spin 2s infinite linear; margin-bottom: 20px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     .insurance-alert { background: #FFF5F5; border: 1px solid #FEB2B2; border-radius: var(--radius); padding: 20px; width: 100%; text-align: left; margin-bottom: 20px; }
     .ins-btn { display: block; width: 100%; background: #C53030; color: white; text-align: center; padding: 12px; border-radius: 10px; font-weight: bold; text-decoration: none; margin-top: 10px; }
@@ -96,25 +118,19 @@
     .btn-share { background: #FEE500; color: #3c1e1e; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1rem; }
     .btn-retry { background: white; border: 2px solid #eee; padding: 15px; width: 100%; border-radius: 12px; font-weight: bold; color: #666; cursor: pointer; margin-top: 10px;}
 
-    /* ★ 광고 영역 높이 고정 (레이아웃 흔들림 방지) ★ */
-    .ad-area { width: 100%; height: 280px; background: #f8f9fa; margin-top: 20px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ccc; font-size: 0.8rem; overflow: hidden; }
-    .ad-loading { width: 300px; height: 250px; background: #f1f2f6; border-radius: 15px; margin-top: 30px; display: flex; align-items: center; justify-content: center; color: #bdc3c7; font-weight: bold; border: 2px dashed #dcdde1; }
+    /* 广告位高度预留 - 防止布局跳动 */
+    .ad-area { width: 100%; min-height: 280px; background: #f8f9fa; margin-top: 30px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 0.8rem; overflow: hidden; border: 2px dashed #eee; }
+    .ad-label { position: absolute; top: 5px; left: 10px; font-size: 0.7rem; color: #aaa; }
 
-    /* Footer */
-    footer { 
-      background: #2D3436; color: #b2bec3; 
-      padding: 50px 20px; 
-      text-align: center; font-size: 0.8rem; line-height: 1.8; 
-      /* Footer는 문서 흐름상 Main 뒤에 오므로, Main이 100vh면 자동으로 밀려남 */
-    }
+    footer { flex-shrink: 0; padding: 40px 20px; background: #2D3436; color: #b2bec3; text-align: center; font-size: 0.8rem; line-height: 1.8; }
     footer a { color: #dfe6e9; text-decoration: none; }
     footer .legal-links span { margin: 0 10px; cursor: pointer; text-decoration: underline; }
 
-    /* Modal */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-    .modal-content { background: white; width: 90%; max-width: 400px; max-height: 80vh; padding: 20px; border-radius: 15px; overflow-y: auto; text-align: left; }
+    .modal-content { background: white; width: 90%; max-width: 400px; max-height: 80vh; padding: 20px; border-radius: 15px; overflow-y: auto; text-align: left; position: relative; }
     .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #aaa; }
-    .modal-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; }
+    .modal-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; color: var(--text-color); }
+    .modal-text { font-size: 0.85rem; line-height: 1.6; color: #555; white-space: pre-line; }
   </style>
 </head>
 <body>
@@ -128,30 +144,41 @@
         <h1>나의 운명적<br/><span>반려견 찾기</span></h1>
         <p class="subtitle">성격(MBTI)과 현실 조건을 고려한<br/>AI 정밀 분석 시스템</p>
         <button class="btn-primary" onclick="startTest()">매칭 시작하기</button>
-        <div id="ad-container-main" class="ad-area">Sponsored AD</div>
+        
+        <div id="ad-container-main" class="ad-area">
+          <span class="ad-label">Sponsored</span>
+          AD LOADING...
+        </div>
       </div>
 
       <div id="screen-question" class="screen">
-        <div style="width:100%; text-align:right; color:#aaa; font-size:0.8rem; margin-bottom:5px;">Step <span id="q-idx">1</span>/12</div>
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-        <h2 id="q-cat" style="color:var(--secondary-color); font-size:0.9rem; margin-bottom:10px;">CATEGORY</h2>
+        <div class="progress-wrapper">
+          <div class="step-text">Step <span id="q-idx">1</span>/12</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+        </div>
+        
+        <div id="q-icon" class="q-visual-icon">🏠</div>
+
         <h2 id="q-text" style="font-family:'Jua'; font-size:1.5rem; margin-bottom:30px;">질문 내용</h2>
         <button class="option-btn" onclick="nextQuestion(0)"><span id="ans-a">A</span> <i class="far fa-check-circle"></i></button>
         <button class="option-btn" onclick="nextQuestion(1)"><span id="ans-b">B</span> <i class="far fa-check-circle"></i></button>
+
+        <div id="ad-container-question" class="ad-area" style="min-height: 250px; height: 250px;">
+          <span class="ad-label">Sponsored</span>
+          AD LOADING...
+        </div>
       </div>
 
       <div id="screen-loading" class="screen">
-        <div style="height:60vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-          <i class="fas fa-dna" style="font-size:3rem; color:var(--primary-color); animation:spin 2s infinite linear; margin-bottom:20px;"></i>
-          <h2 id="load-msg" style="font-family:'Jua'; font-size:1.5rem; margin-bottom:10px;">분석 중...</h2>
-          <div id="ad-container-loading" class="ad-loading">PREMIUM AD</div>
+        <div class="loading-container">
+          <i class="fas fa-dna dna-spinner"></i>
+          <h2 id="load-msg" class="loading-text">분석 중...</h2>
+          <div id="ad-container-loading" class="ad-area">PREMIUM AD</div>
         </div>
       </div>
 
       <div id="screen-result" class="screen">
-        <div style="background:#2D3436; color:white; padding:5px 15px; border-radius:20px; font-weight:bold; font-size:0.9rem; margin-bottom:15px;">
-          <i class="fas fa-heart" style="color:#FF7675;"></i> 매칭률 <span id="match-percent">97</span>%
-        </div>
+        <div class="score-badge"><i class="fas fa-heart"></i> 매칭률 <span id="match-percent">97</span>%</div>
         <h1 id="res-name" style="font-family:'Jua'; font-size:2.2rem; color:var(--primary-color); margin-bottom:10px;">견종 이름</h1>
         
         <img id="res-img" class="result-img" alt="결과 이미지" />
@@ -185,6 +212,7 @@
 
         <button class="btn-share" onclick="shareFinalResult()"><i class="fas fa-share-alt"></i> 결과 공유하기</button>
         <button class="btn-retry" onclick="location.reload()">🔄 다시 테스트하기</button>
+        
         <div id="ad-container-result" class="ad-area">Footer AD</div>
       </div>
     </main>
@@ -194,7 +222,7 @@
         <span onclick="openModal('terms')">이용약관</span> | 
         <span onclick="openModal('privacy')">개인정보처리방침</span>
       </div>
-      <p>Copyright © 2025 Pet Match Lab.</p>
+      <p>Copyright © 2025 Pet Match Lab. All rights reserved.</p>
       <a href="https://smartkrinsurance.com" class="family-site" target="_blank" style="color:#dfe6e9; text-decoration:none; display:block; margin-top:10px; font-weight:bold;">
         Operated by Smart KR Insurance <i class="fas fa-external-link-alt" style="font-size:0.8rem"></i>
       </a>
@@ -230,31 +258,27 @@
       { name: "미소천사 사모예드", img: "./images/samoyed.jpeg", traits: [9, 9, 9], tag: "#솜사탕", desc: "항상 웃고 있는 얼굴의 사모예드! 엄청난 털 빠짐과 활동량을 감당할 수 있다면, 세상에서 가장 행복한 반려견이 됩니다.", health: "고관절 및 당뇨병 주의" }
     ];
 
+    // ★★★ 질문지 업그레이드 (아이콘 추가) ★★★
     const questions = [
-      { cat: "🏠 거주 환경", q: "현재 거주하고 계신 주거 형태는?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
-      { cat: "❤️ 성격 매칭", q: "주말 아침, 이상적인 휴식 방법은?", a: "이불 밖은 위험해.. 집콕 힐링", b: "날씨 좋은데 무조건 나가야지!", impact: [0, 0, 3] },
-      { cat: "🧹 털 관리", q: "검은 옷에 하얀 강아지 털이 묻는다면?", a: "으악 절대 싫어! 돌돌이 필수.", b: "강아지 키우면 당연한 거지. 괜찮다.", impact: [0, -1, 0] },
-      { cat: "🤝 관계성", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
-      { cat: "⏰ 산책 시간", q: "하루에 강아지 산책, 얼마나 가능하세요?", a: "바빠서 30분 내외가 한계..", b: "1시간 이상 매일 가능!", impact: [0, 0, 2] },
-      { cat: "🗣️ 사회성", q: "산책 중 낯선 사람이 말을 건다면?", a: "어색하게 웃고 자리를 피한다.", b: "오! 안녕하세요! 금방 수다를 떤다.", impact: [2, 0, 0] },
-      { cat: "💰 경제력", q: "대형견은 병원비/식비가 소형견의 3배입니다.", a: "현실적으로 부담스럽다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] },
-      { cat: "🛁 관리 난이도", q: "매일 빗질하고 눈물자국 닦아주는 것, 자신 있나요?", a: "솔직히 좀 귀찮을 것 같다.", b: "내 강아지 예뻐지는 건데 당연하지!", impact: [0, -1, 0] },
-      { cat: "🎓 훈련", q: "강아지가 말을 안 듣고 고집을 부린다면?", a: "어휴.. 좀 답답할 것 같다.", b: "단호하게 훈육하거나 전문가를 부른다.", impact: [0, 0, 1] },
-      { cat: "🔊 짖음 소음", q: "이웃집 소음 민원이 걱정되시나요?", a: "네, 방음이 잘 안돼서 조용해야 해요.", b: "주택이라 좀 짖어도 괜찮아요.", impact: [0, -1, 0] },
-      { cat: "🦠 위생", q: "강아지가 내 침대에 올라와서 자는 건?", a: "절대 안됨. 잠자리는 분리!", b: "너무 좋아! 껴안고 잘래.", impact: [-1, 0, 0] },
-      { cat: "✈️ 분리불안", q: "집을 비우는 시간이 하루에 얼마나 되나요?", a: "8시간 이상 (직장인)", b: "거의 집에 있거나 재택근무", impact: [0, 0, -1] }
+      { icon: "🏠", q: "현재 거주하고 계신 주거 형태는?", a: "원룸/오피스텔/아파트 (실내)", b: "마당이 있는 주택/넓은 실내", impact: [0, -2, 0] },
+      { icon: "🛌", q: "주말 아침, 이상적인 휴식 방법은?", a: "이불 밖은 위험해.. 집콕 힐링", b: "날씨 좋은데 무조건 나가야지!", impact: [0, 0, 3] },
+      { icon: "🧹", q: "검은 옷에 하얀 강아지 털이 묻는다면?", a: "으악 절대 싫어! 돌돌이 필수.", b: "강아지 키우면 당연한 거지. 괜찮다.", impact: [0, -1, 0] },
+      { icon: "💞", q: "강아지와의 관계, 당신의 로망은?", a: "나만 바라보는 껌딱지 (애교)", b: "서로 사생활 존중하는 룸메이트 (독립)", impact: [-3, 0, 0] },
+      { icon: "⏰", q: "하루에 강아지 산책, 얼마나 가능하세요?", a: "바빠서 30분 내외가 한계..", b: "1시간 이상 매일 가능!", impact: [0, 0, 2] },
+      { icon: "🗣️", q: "산책 중 낯선 사람이 말을 건다면?", a: "어색하게 웃고 자리를 피한다.", b: "오! 안녕하세요! 금방 수다를 떤다.", impact: [2, 0, 0] },
+      { icon: "💰", q: "대형견은 병원비/식비가 소형견의 3배입니다.", a: "현실적으로 부담스럽다.", b: "상관없다. 든든한 게 좋다.", impact: [0, -2, 0] },
+      { icon: "🛁", q: "매일 빗질하고 눈물자국 닦아주는 것, 자신 있나요?", a: "솔직히 좀 귀찮을 것 같다.", b: "내 강아지 예뻐지는 건데 당연하지!", impact: [0, -1, 0] },
+      { icon: "🎓", q: "강아지가 말을 안 듣고 고집을 부린다면?", a: "어휴.. 좀 답답할 것 같다.", b: "단호하게 훈육하거나 전문가를 부른다.", impact: [0, 0, 1] },
+      { icon: "🔊", q: "이웃집 소음 민원이 걱정되시나요?", a: "네, 방음이 잘 안돼서 조용해야 해요.", b: "주택이라 좀 짖어도 괜찮아요.", impact: [0, -1, 0] },
+      { icon: "🦠", q: "강아지가 내 침대에 올라와서 자는 건?", a: "절대 안됨. 잠자리는 분리!", b: "너무 좋아! 껴안고 잘래.", impact: [-1, 0, 0] },
+      { icon: "🚪", q: "집을 비우는 시간이 하루에 얼마나 되나요?", a: "8시간 이상 (직장인)", b: "거의 집에 있거나 재택근무", impact: [0, 0, -1] }
     ];
 
     let qIdx = 0;
     let userScore = [5, 5, 3]; 
     let currentDog = null;
 
-    // ★ JS 로직에서도 화면 전환 시 스크롤 강제 초기화 ★
-    function scrollToTop() { 
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }
+    function scrollToTop() { window.scrollTo(0, 0); }
 
     function startTest() {
       document.querySelector('#screen-start').classList.remove('active');
@@ -265,12 +289,18 @@
 
     function loadQuestion() {
       const q = questions[qIdx];
-      document.getElementById('q-idx').innerText = qIdx + 1;
-      document.getElementById('q-cat').innerText = q.cat;
+      // 아이콘 및 텍스트 업데이트
+      document.getElementById('q-icon').innerText = q.icon; 
       document.getElementById('q-text').innerText = q.q;
       document.getElementById('ans-a').innerText = q.a;
       document.getElementById('ans-b').innerText = q.b;
-      document.getElementById('progress').style.width = ((qIdx) / questions.length * 100) + "%";
+      
+      // ★★★ 중요: 진행바와 스텝 표시 업데이트 ★★★
+      document.getElementById('q-idx').innerText = qIdx + 1;
+      document.getElementById('progress').style.width = ((qIdx + 1) / questions.length * 100) + "%";
+      
+      // 질문 페이지 광고 로드 시도 (ads.js가 있다면)
+      if(window.injectAd) window.injectAd("ad-container-question", "2345678901", "rectangle");
     }
 
     function nextQuestion(choice) {
@@ -323,7 +353,6 @@
       document.getElementById('res-desc').innerText = bestDog.desc;
       document.getElementById('res-tag').innerText = bestDog.tag;
       document.getElementById('match-percent').innerText = matchScore; 
-      
       document.getElementById('res-health').innerText = bestDog.health;
       document.getElementById('ins-btn-text').innerText = bestDog.name.split(' ').pop() + " 보험료 10초 확인 >";
 
@@ -373,9 +402,6 @@
         document.getElementById('modal-overlay').style.display = 'none';
       }
     }
-    
-    // 페이지 로드 시에도 최상단 강제 이동
-    window.onload = scrollToTop;
     //]]>
   </script>
 </body>
